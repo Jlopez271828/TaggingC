@@ -13,6 +13,8 @@
 #define NO_ERROR 0
 #define MATRIX_ERROR 1
 #define COLLECTIONS_ERROR 2
+#define MAX_NODES_REACHED 10
+#define MAX_TAGS_REACHED 10
 
 typedef unsigned char BYTE;
 

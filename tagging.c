@@ -50,15 +50,21 @@ void addTag(DB* thisDB, TAG to_add){
         free(thisDB->root_deleted_tag);
         thisDB->root_deleted_tag = temp;
 
+        thisDB->current_tags++;
+
         return;
     }
 
     if (thisDB->current_tags + 1 <= thisDB->max_tags){
         thisDB->tag_collection[thisDB->current_tags] = to_add;
+        thisDB->current_tags++;
         return;
     }
     else{
         printf("max number of tags exceeded");
+
+        thisDB->error_code = MAX_TAGS_REACHED;
+
         return;
     }
 
@@ -74,15 +80,21 @@ void addNode(DB* thisDB, NODE to_add){
         free(thisDB->root_deleted_node);
         thisDB->root_deleted_node = temp;
 
+        thisDB->current_nodes++;
+
         return;
     }
 
     if (thisDB->current_nodes + 1 <= thisDB->max_nodes){
         thisDB->node_collection[thisDB->current_nodes] = to_add;
+        
+        thisDB->current_nodes++;
+        
         return;
     }
     else{
         printf("max number of nodes exceeded");
+        thisDB->error_code = MAX_NODES_REACHED;
     }
 }
 
@@ -119,6 +131,8 @@ void deleteTagByName(DB* thisDB, char* subject){
     new_deleted_tag->index = to_delete_index;
     new_deleted_tag->next = thisDB->root_deleted_tag;
     thisDB->root_deleted_tag = new_deleted_tag;
+
+    thisDB->current_tags--;
 
     
 }
@@ -160,6 +174,8 @@ void deleteNodeByName(DB* thisDB, char* subject){
     new_deleted_node->index = to_delete_index;
     new_deleted_node->next = thisDB->root_deleted_node;
     thisDB->root_deleted_node = new_deleted_node;
+
+    thisDB->current_nodes--;
 
 }
 
